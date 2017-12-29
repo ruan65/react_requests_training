@@ -19,7 +19,7 @@ class NewPost extends Component {
       
       console.log('Post data handler: ' + JSON.stringify(post))
       
-      Axios.post('https://jsonplaceholder.typicode.com/posts', post)
+      Axios.post('/posts', post)
         .then(response => {
           console.log(response)
         })
