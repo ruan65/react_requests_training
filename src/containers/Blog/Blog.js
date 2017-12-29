@@ -10,29 +10,36 @@ class Blog extends Component {
   
   state = {
     posts: [],
-    selectedPostId: null
+    selectedPostId: null,
+    error: null
   }
   
   componentDidMount() {
-    console.log( 'component did mount........' )
+    console.log('component did mount........')
     
-    axios.get( 'https://jsonplaceholder.typicode.com/posts' ).then( response => {
-      
-      const posts = response.data.slice( 0, 5 )
-      
-      const updatedPosts = posts.map( post => ( { ...post, author: 'Andreyka' } )
-      )
-      this.setState( { posts: updatedPosts } )
-      
-      console.log('State: ' + this.state)
-    } )
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+      .then(response => {
+        
+        const posts = response.data.slice(0, 5)
+        
+        const updatedPosts = posts.map(post => ({ ...post, author: 'Andreyka' })
+        )
+        this.setState({ posts: updatedPosts })
+        
+        console.log('State: ' + this.state)
+      })
+      .catch(err => {
+        // console.log(err)
+        
+        this.setState({error: err.toString()})
+      })
   }
   
-  selectPostHandler(id) {
+  selectPostHandler( id ) {
     
     console.log('selected: ' + id)
     
-    this.setState({selectedPostId: id})
+    this.setState({ selectedPostId: id })
     
   }
   
@@ -40,12 +47,13 @@ class Blog extends Component {
     
     console.log(this.state.selectedPost)
     
-    const posts = this.state.posts.map( post =>
+    
+    const posts = this.state.error ? this.state.error : this.state.posts.map(post =>
       <Post
         post={post}
         key={post.id}
-        clicked={() => this.selectPostHandler(post.id) }
-      /> )
+        clicked={() => this.selectPostHandler(post.id)}
+      />)
     
     return (
       <div>
