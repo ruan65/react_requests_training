@@ -4,7 +4,7 @@ import Post from '../../components/Post/Post';
 import FullPost from '../../components/FullPost/FullPost';
 import NewPost from '../../components/NewPost/NewPost';
 import './Blog.css';
-import axios from 'axios'
+import axiosInstance from '../../Axios'
 
 class Blog extends Component {
   
@@ -16,8 +16,8 @@ class Blog extends Component {
   
   componentDidMount() {
     console.log('component did mount........')
-    
-    axios.get('/posts')
+  
+    axiosInstance.get('/posts')
       .then(response => {
         
         const posts = response.data.slice(0, 5)
