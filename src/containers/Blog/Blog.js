@@ -1,71 +1,21 @@
 import React, { Component } from 'react';
-
-import Post from '../../components/Post/Post';
-import FullPost from '../../components/FullPost/FullPost';
-import NewPost from '../../components/NewPost/NewPost';
+import Posts from './Posts/Posts'
 import './Blog.css';
-import axiosInstance from '../../Axios'
 
 class Blog extends Component {
   
-  state = {
-    posts: [],
-    selectedPostId: null,
-    error: null
-  }
-  
-  componentDidMount() {
-    console.log('component did mount........')
-  
-    axiosInstance.get('/posts')
-      .then(response => {
-        
-        const posts = response.data.slice(0, 5)
-        
-        const updatedPosts = posts.map(post => ({ ...post, author: 'Andreyka' })
-        )
-        this.setState({ posts: updatedPosts })
-        
-        console.log('State: ' + this.state)
-      })
-      .catch(err => {
-        // console.log(err)
-        
-        this.setState({error: err.toString()})
-      })
-  }
-  
-  selectPostHandler( id ) {
-    
-    console.log('selected: ' + id)
-    
-    this.setState({ selectedPostId: id })
-    
-  }
-  
   render() {
-    
-    console.log(this.state.selectedPost)
-    
-    
-    const posts = this.state.error ? this.state.error : this.state.posts.map(post =>
-      <Post
-        post={post}
-        key={post.id}
-        clicked={() => this.selectPostHandler(post.id)}
-      />)
-    
     return (
-      <div>
-        <section className="Posts">
-          {posts}
-        </section>
-        <section>
-          <FullPost id={this.state.selectedPostId}/>
-        </section>
-        <section>
-          <NewPost/>
-        </section>
+      <div className='Blog'>
+        <header>
+          <nav>
+            <ul>
+              <li><a href='/'>Home</a></li>
+              <li><a href='/new-post'>New Post</a></li>
+            </ul>
+          </nav>
+        </header>
+        <Posts/>
       </div>
     );
   }
