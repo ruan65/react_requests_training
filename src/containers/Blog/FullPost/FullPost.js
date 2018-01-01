@@ -17,13 +17,15 @@ class FullPost extends Component {
       })
   }
   
-  componentDidUpdate() {
+  componentDidMount() {
     
-    if (this.props.id) {
+    console.log(this.props)
+    
+    if (this.props.match.params.postId) {
 
       if (!this.state.fullPost || (this.state.fullPost && this.state.fullPost.id !== this.props.id)) {
   
-        Axios.get('/posts/' + this.props.id)
+        Axios.get('/posts/' + this.props.match.params.postId)
           .then(response => {
             
             console.log(response)

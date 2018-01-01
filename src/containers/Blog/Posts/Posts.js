@@ -31,20 +31,24 @@ class Posts extends Component {
   
   selectPostHandler( id ) {
     
-    console.log('selected: ' + id)
+    // console.log('selected: ' + id)
+    //
+    // this.setState({ selectedPostId: id })
     
-    this.setState({ selectedPostId: id })
+    this.props.history.push({pathname: '/' + id})
     
   }
   
   render() {
     
-    const posts = this.state.error ? this.state.error : this.state.posts.map(post =>
-      <Post
-        post={post}
-        key={post.id}
-        clicked={() => this.selectPostHandler(post.id)}
-      />)
+    const posts = this.state.error ? this.state.error : this.state.posts.map(post => (
+        <Post
+          key={post.id}
+          post={post}
+          clicked={() => this.selectPostHandler(post.id)}
+        />
+      )
+    )
     
     return (
       <section className="Posts">

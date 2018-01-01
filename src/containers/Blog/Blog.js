@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Route, NavLink } from 'react-router-dom'
+import { Route, NavLink, Switch } from 'react-router-dom'
 import Posts from './Posts/Posts'
 import NewPost from './NewPost/NewPost'
+import FullPost from './FullPost/FullPost'
 import './Blog.css';
 
 class Blog extends Component {
@@ -17,10 +18,10 @@ class Blog extends Component {
               <li><NavLink to='/' exact activeClassName='orange'>Home</NavLink></li>
               <li><NavLink
                 to={{
-                pathname: '/new-post',
-                hash: '#submit',
-                search: '?quick-submit=true'
-              }}
+                  pathname: '/new-post',
+                  hash: '#submit',
+                  search: '?quick-submit=true'
+                }}
                 activeClassName='customStyle'
                 activeStyle={{
                   color: '#fa92ff',
@@ -34,8 +35,10 @@ class Blog extends Component {
         {/*<Route path='/' exact render={() => <h1>Main 77</h1>}/>*/}
         
         <Route path='/' exact component={Posts}/>
-        <Route path='/new-post'component={NewPost}/>
-
+        <Switch>
+          <Route path='/new-post' exact component={NewPost}/>
+          <Route path='/:postId' exact component={FullPost}/>
+        </Switch>
       </div>
     );
   }
